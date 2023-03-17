@@ -16,6 +16,7 @@ type PropsType = {
     changeFilter: (value: FilteredTaskType) => void
     filter: FilteredTaskType
     addTask: (title: string) => void
+    changeTaskStatus: (taskId: string, newIsDone: boolean) => void
 }
 
 export function Todolist(props: PropsType) {
@@ -37,6 +38,7 @@ export function Todolist(props: PropsType) {
         setError('')
     }
 
+    /** ADD-TASK*/
     const onclickButtonAddTaskHandler = () => {
         if (title.trim() !== '') {
             props.addTask(title.trim())
@@ -46,8 +48,9 @@ export function Todolist(props: PropsType) {
         }
     }
 
+    /** ADD-TASK FOR ENTER*/
     const onDoubleClickAddTaskTitleHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if(event.key === 'Enter') {
+        if (event.key === 'Enter') {
             onclickButtonAddTaskHandler()
         }
     }
@@ -66,13 +69,25 @@ export function Todolist(props: PropsType) {
         <ul>
             {props.tasks.map((task) => {
 
+                /** DELETE-TASK*/
                 const onclickDeleteTaskHandler = () => {
                     props.removeTask(task.id)
                 }
 
+                /** CHECKED IS-DONE TASK*/
+                const onChangeIsDoneTaskHandler = (event: ChangeEvent<HTMLInputElement>) => {
+                    const eventTask = event.currentTarget.checked
+                    props.changeTaskStatus(task.id, eventTask)
+                }
+
                 return (
                     <li key={task.id}>
-                        <input type="checkbox" checked={task.isDone}/>
+                        <input
+                            onChange={onChangeIsDoneTaskHandler}
+                            type="checkbox"
+                            checked={task.isDone}
+                            className={task.isDone ? style.isDoneTask : ""}
+                        />
                         <span>{task.title}</span>
                         <Button title={'x'} callBack={onclickDeleteTaskHandler}/>
                     </li>
@@ -81,10 +96,22 @@ export function Todolist(props: PropsType) {
 
 
         </ul>
+
+        {/**{FILTERED-TASK}*/}
         <div>
-            <Button title={'All'} callBack={() => onclickFilteredTaskHandler('all')}/>
-            <Button title={'Active'} callBack={() => onclickFilteredTaskHandler('active')}/>
-            <Button title={'Completed'} callBack={() => onclickFilteredTaskHandler('completed')}/>
+            <Button
+                className={props.filter === 'all' ? style.filterButton : ''}
+                title={'All'}
+                callBack={() => onclickFilteredTaskHandler('all')}
+            />
+            <Button
+                className={props.filter === 'active' ? style.filterButton : ''}
+                title={'Active'}
+                callBack={() => onclickFilteredTaskHandler('active')}/>
+            <Button
+                className={props.filter === 'completed' ? style.filterButton : ''}
+                title={'Completed'}
+                callBack={() => onclickFilteredTaskHandler('completed')}/>
         </div>
     </div>
 }
