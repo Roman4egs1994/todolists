@@ -2,6 +2,8 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilteredTaskType} from "./App";
 import {Button} from "./common/components/Button/Button";
 import style from './todolist.module.css'
+import {AddItemForm} from "./components/AddItemForm/AddItemForm";
+import {EditableSpan} from "./components/EditableSpan/EditableSpan";
 
 export type TaskType = {
     id: string
@@ -19,11 +21,12 @@ type PropsType = {
     addTask: (todolistId: string,title: string) => void
     changeTaskStatus: (todolistId: string,taskId: string, newIsDone: boolean) => void
     deleteTodolist:(todolistId:string) => void
+    changeTaskTitle: (todolistId: string, taskId:string,newTitle:string) => void
+    changeTodolistTitle: (todolistId:string,newTitle:string) => void
 }
 
 export function Todolist(props: PropsType) {
-    const [title, setTitle] = useState(``)
-    const [error, setError] = useState<null | string>('')
+
 
     const onclickFilteredTaskHandler = (todolistId:string,buttonName: FilteredTaskType) => {
         if (buttonName === 'completed') {
@@ -35,46 +38,27 @@ export function Todolist(props: PropsType) {
         }
     }
 
-    const onChangeInputTitleTaskHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.currentTarget.value)
-        setError('')
-    }
-
-    /** ADD-TASK*/
-    const onclickButtonAddTaskHandler = () => {
-        if (title.trim() !== '') {
-            props.addTask(props.todolistId,title.trim())
-            setTitle('')
-        } else {
-            setError('Enter text')
-        }
-    }
-
-    /** ADD-TASK FOR ENTER*/
-    const onDoubleClickAddTaskTitleHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            onclickButtonAddTaskHandler()
-        }
-    }
-
     /** DELETE-TODOLIST*/
     const onClickDeleteTodoHandler = () => {
         props.deleteTodolist(props.todolistId)
     }
 
+    /** ADD-TASK*/
+    const addTaskHandler = (title:string) => {
+        props.addTask(props.todolistId,title)
+    }
+
+    /** CHANGE-TITLE-TODOLIST*/
+    const onChangeTodolistTitleHandler = (newTitle:string) => {
+        props.changeTodolistTitle(props.todolistId,newTitle)
+    }
+
     return <div>
-        <h3>{props.title}
+        <h3>
+            <EditableSpan title={props.title} callBack={onChangeTodolistTitleHandler}/>
         <Button title={'x'} callBack={onClickDeleteTodoHandler}/>
         </h3>
-        <div>
-            <input
-                value={title}
-                onChange={onChangeInputTitleTaskHandler}
-                onKeyPress={onDoubleClickAddTaskTitleHandler}
-            />
-            <Button title={'+'} callBack={onclickButtonAddTaskHandler}/>
-            {error && <div className={style.error}>{error}</div>}
-        </div>
+        <AddItemForm callBack={addTaskHandler}/>
         <ul>
             {props.tasks.map((task) => {
 
@@ -89,6 +73,11 @@ export function Todolist(props: PropsType) {
                     props.changeTaskStatus(props.todolistId,task.id, eventTask)
                 }
 
+                const onClickEditTitleHandler = (newTitle:string) => {
+                    props.changeTaskTitle(props.todolistId,task.id,newTitle)
+                }
+
+
                 return (
                     <li key={task.id}>
                         <input
@@ -97,7 +86,8 @@ export function Todolist(props: PropsType) {
                             checked={task.isDone}
                             className={task.isDone ? style.isDoneTask : ""}
                         />
-                        <span>{task.title}</span>
+                        {/*<span>{task.title}</span>*/}
+                        <EditableSpan  title={task.title} callBack={onClickEditTitleHandler}/>
                         <Button title={'x'} callBack={onclickDeleteTaskHandler}/>
                     </li>
                 )
@@ -106,7 +96,7 @@ export function Todolist(props: PropsType) {
 
         </ul>
 
-        {/**{FILTERED-TASK}*/}
+
         <div>
             <Button
                 className={props.filter === 'all' ? style.filterButton : ''}

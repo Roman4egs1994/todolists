@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from "uuid";
+import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 
 export type FilteredTaskType = 'all' | 'active' | 'completed'
 
@@ -38,29 +39,49 @@ function App() {
             {id: v1(), title: 'GraphQL', isDone: false},
         ]
     })
+
+
+    /** ADD-TODOLIST*/
+    const addTodolistHandler = (title: string) => {
+        const newId = v1()
+        const newTodo: TodolistsType = {id: newId, title: title, filter: 'all'}
+        setTodolists([newTodo, ...todolists])
+        setTasks({...tasks,[newId]:[]})
+    }
+    /** CHANGE-TITLE-TODOLIST*/
+    const changeTodolistTitle = (todolistId:string,newTitle:string) => {
+        setTodolists(todolists.map((el)=> el.id === todolistId ? {...el,title: newTitle} : el))
+    }
     /** DELETE-TODOLIST*/
-    const deleteTodolist = (todolistsId:string) => {
+    const deleteTodolist = (todolistsId: string) => {
         setTodolists(todolists.filter((el) => el.id !== todolistsId))
         delete tasks[todolistsId]
     }
 
 
     /** ADD-TASK*/
-    const addTask = (todolistId:string,title: string) => {
+    const addTask = (todolistId: string, title: string) => {
 
         const newTask: TaskType = {id: v1(), title: title, isDone: false}
-        setTasks({...tasks,[todolistId]:[newTask,...tasks[todolistId]]})
+        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
     }
 
     /** DELETE-TASK*/
-    const removeTask = (todolistId:string,taskId: string) => {
-        setTasks({...tasks,[todolistId]: tasks[todolistId].filter((el) => el.id !== taskId)})
+    const removeTask = (todolistId: string, taskId: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].filter((el) => el.id !== taskId)})
+    }
+    /** CHANGE TITLE TASK*/
+    const changeTaskTitle = (todolistId: string, taskId:string,newTitle:string) => {
+        setTasks({...tasks,[todolistId]:tasks[todolistId].map((el)=>el.id === taskId ? {...el,title:newTitle}: el)})
     }
 
     /** CHECKED IS-DONE TASK*/
-    const changeTaskStatus = (todolistId:string,taskId: string, newIsDone: boolean) => {
+    const changeTaskStatus = (todolistId: string, taskId: string, newIsDone: boolean) => {
         // setTasks(tasks.map((task) => task.id === taskId ? {...task, isDone: newIsDone} : task))
-        setTasks({...tasks,[todolistId]:tasks[todolistId].map((el)=> el.id === taskId ? {...el, isDone: newIsDone} : el)})
+        setTasks({
+            ...tasks,
+            [todolistId]: tasks[todolistId].map((el) => el.id === taskId ? {...el, isDone: newIsDone} : el)
+        })
     }
 
     /** FILTERED-TASK-START--------------------------------------------------------*/
@@ -70,7 +91,8 @@ function App() {
 
     return (
         <div className="App">
-            {todolists.map((el) => {
+            <AddItemForm callBack={addTodolistHandler}/>
+            {todolists?.map((el) => {
 
                 let filterTask = tasks[el.id] //all
                 if (el.filter === 'completed') {
@@ -92,7 +114,9 @@ function App() {
                         filter={el.filter}
                         addTask={addTask}
                         changeTaskStatus={changeTaskStatus}
-                        deleteTodolist = {deleteTodolist}
+                        deleteTodolist={deleteTodolist}
+                        changeTaskTitle = {changeTaskTitle}
+                        changeTodolistTitle = {changeTodolistTitle}
                     />
                 )
             })}
