@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Button} from "../../common/components/Button/Button";
+import {ButtonHandler} from "../../common/components/Button/ButtonHandler";
 import style from "../../todolist.module.css";
+import TextField from '@mui/material/TextField';
 
 type AddItemFormPropsType = {
     callBack: (title:string)=> void
@@ -34,15 +35,23 @@ export const AddItemForm = (props:AddItemFormPropsType) => {
             onclickButtonAddTaskHandler()
         }
     }
+
+    const cssInlineStyle = {maxWidth: '39px', maxHeight: '39px', minWidth: '39px', minHeight: '39px'}
+
     return (
         <div>
-            <input
+            <TextField
+                size={'small'}
+                id="outlined-basic"
+                error={!!error}
+                label={error ? 'Type Text...' : 'Enter text'}
+                variant="outlined"
                 value={title}
                 onChange={onChangeInputTitleTaskHandler}
                 onKeyPress={onDoubleClickAddTaskTitleHandler}
             />
-            <Button title={'+'} callBack={onclickButtonAddTaskHandler}/>
-            {error && <div className={style.error}>{error}</div>}
+            <ButtonHandler title={'+'} callBack={onclickButtonAddTaskHandler} variant={'contained'} style={cssInlineStyle}/>
+            {/*{error && <div className={style.error}>{error}</div>}*/}
         </div>
     );
 };
