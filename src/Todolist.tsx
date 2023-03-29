@@ -58,7 +58,7 @@ export function Todolist(props: PropsType) {
     }
 
     // /** Cтили для кнопок фильтрации*/
-    // const cssInlineStyleButton = {maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}
+    const cssInlineStyleButton = {margin: '3px'}
 
     return <div>
         <h3>
@@ -106,16 +106,19 @@ export function Todolist(props: PropsType) {
 
         <div>
             <ButtonHandler
+                style={cssInlineStyleButton}
                 title={'All'}
                 callBack={() => onclickFilteredTaskHandler(props.todolistId, 'all')}
                 variant={props.filter === 'all' ? "contained" : 'outlined'}
             />
             <ButtonHandler
+                style={cssInlineStyleButton}
                 title={'Active'}
                 callBack={() => onclickFilteredTaskHandler(props.todolistId, 'active')}
                 variant={props.filter === 'active' ? "contained" : 'outlined'}
             />
             <ButtonHandler
+                style={cssInlineStyleButton}
                 title={'Completed'}
                 callBack={() => onclickFilteredTaskHandler(props.todolistId, 'completed')}
                 variant={props.filter === 'completed' ? "contained" : 'outlined'}

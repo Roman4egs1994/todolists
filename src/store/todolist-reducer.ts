@@ -1,15 +1,15 @@
 import {TodolistType} from "../App";
 import {v1} from "uuid";
 
-
-export const todolistsReducer = (state: TodolistType[], action: ActionTodolistType) => {
+/** REDUCER всех действий связанных с Todolist*/
+export const todolistReducer = (state: TodolistType[], action: ActionTodolistType):TodolistType[] => {
     switch (action.type) {
         case "REMOVE-TODOLIST": {
             return state.filter((todo) => todo.id !== action.todolistId)
         }
         case "ADD-TODOLIST": {
-            const newId = v1()
-            const newTodo = {id: newId, title: action.title,filter:'all'}
+            // const newId = v1()
+            const newTodo: TodolistType = {id: action.todolistId, title: action.title,filter:'all'}
             return  [newTodo, ...state]
         }
         case "CHANGE-TODOLIST-TITLE": {
@@ -22,6 +22,7 @@ export const todolistsReducer = (state: TodolistType[], action: ActionTodolistTy
 }
 
 
+/** ACTION CREATOR*/
 export const removeTodolistAC = (todolistId: string) => {
     return {
         type: "REMOVE-TODOLIST",
@@ -32,7 +33,8 @@ export const removeTodolistAC = (todolistId: string) => {
 export const addTodolistAC = (title: string) => {
     return {
         type: "ADD-TODOLIST",
-        title
+        title,
+        todolistId: v1() //Для формирования одинаковых Id в tasks и todolist
     } as const
 }
 
@@ -46,12 +48,13 @@ export const changeTodolistTitleAC = (todolistId:string,newTitle:string) =>{
 
 
 
-
-type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
-type AddTodolistACType = ReturnType<typeof addTodolistAC>
+/** ТИПИЗАЦИЯ ACTION CREATOR*/
+export type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
+export type AddTodolistACType = ReturnType<typeof addTodolistAC>
 type ChangeTodolistTitleAC = ReturnType<typeof changeTodolistTitleAC>
 
 
+/** ТИПИЗАЦИЯ РЕДЮСЕРА*/
 type ActionTodolistType = RemoveTodolistType
     | AddTodolistACType
     | ChangeTodolistTitleAC
