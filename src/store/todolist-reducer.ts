@@ -1,24 +1,25 @@
-import {FilteredTaskType, TodolistType} from "../App";
 import {v1} from "uuid";
 
 
+const initialState: TodolistType[] = []
+
 /** REDUCER всех действий связанных с Todolist*/
-export const todolistReducer = (state: TodolistType[], action: ActionTodolistType):TodolistType[] => {
+export const todolistReducer = (state = initialState, action: ActionTodolistType): TodolistType[] => {
     switch (action.type) {
         case "REMOVE-TODOLIST": {
             return state.filter((todo) => todo.id !== action.todolistId)
         }
         case "ADD-TODOLIST": {
             // const newId = v1()
-            const newTodo: TodolistType = {id: action.todolistId, title: action.title,filter:'all'}
-            return  [newTodo, ...state]
+            const newTodo: TodolistType = {id: action.todolistId, title: action.title, filter: 'all'}
+            return [newTodo, ...state]
         }
         case "CHANGE-TODOLIST-TITLE": {
             return state.map((todo) => todo.id === action.todolistId ? {...todo, title: action.newTitle} : todo)
         }
         case "CHANGE-FILTER": {
             return state.map((todo) => todo.id === action.todolistId
-                ? {...todo,filter: action.value}
+                ? {...todo, filter: action.value}
                 : todo)
         }
         default: {
@@ -44,15 +45,15 @@ export const addTodolistAC = (title: string) => {
     } as const
 }
 
-export const changeTodolistTitleAC = (todolistId:string,newTitle:string) =>{
+export const changeTodolistTitleAC = (todolistId: string, newTitle: string) => {
     return {
         type: "CHANGE-TODOLIST-TITLE",
         todolistId,
         newTitle
-    }as const
+    } as const
 }
 
-export const changeFilterAC = (todolistId:string, value: FilteredTaskType) => {
+export const changeFilterAC = (todolistId: string, value: FilteredTaskType) => {
     return {
         type: "CHANGE-FILTER",
         todolistId,
@@ -71,3 +72,12 @@ type ActionTodolistType = RemoveTodolistType
     | AddTodolistACType
     | ChangeTodolistTitleAC
     | ChangeFilterACType
+
+
+/** ТИПИЗАЦИЯ INITIALSTATE*/
+export type FilteredTaskType = 'all' | 'active' | 'completed'
+export type TodolistType = {
+    id: string,
+    title: string,
+    filter: FilteredTaskType
+}

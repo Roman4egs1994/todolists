@@ -1,10 +1,13 @@
-import {TaskStateType} from "../App";
 import {v1} from "uuid";
 import {AddTodolistACType, RemoveTodolistType} from "./todolist-reducer";
+import {TaskType} from "../Todolist";
+
+const initialState: TaskStateType = {}
+
 
 
 /** REDUCER всех действий связанных с Task*/
-export const tasksReducer = (state: TaskStateType, action: ActionTasksType): TaskStateType => {
+export const tasksReducer = (state = initialState, action: ActionTasksType): TaskStateType => {
     switch (action.type) {
         case "REMOVE-TASK": {
             return {...state, [action.todolistId]: state[action.todolistId].filter((task) => task.id !== action.taskId)}
@@ -95,3 +98,31 @@ type ActionTasksType = RemoveTaskACType
     | ChangeTaskTitleACType
     | AddTodolistACType /** КЕЙС ИЗ ТУДУЛИСТА ДЛЯ СОЗДАНИЯ ПУСТОГО МАССИВА ТАСОК */
     | RemoveTodolistType
+
+/** ТИПИЗАЦИЯ initialState*/
+export type TaskStateType = {
+    [key: string]: TaskType[]
+}
+
+
+
+// let todolistID1 = v1()
+// let todolistID2 = v1()
+//
+// let [todolists, setTodolists] = useState<Array<TodolistType>>([
+//     {id: todolistID1, title: 'What to learn', filter: 'all'},
+//     {id: todolistID2, title: 'What to buy', filter: 'all'},
+// ])
+//
+// let [tasks, setTasks] = useState<TaskStateType>({
+//     [todolistID1]: [
+//         {id: v1(), title: 'HTML&CSS', isDone: true},
+//         {id: v1(), title: 'JS', isDone: true},
+//         {id: v1(), title: 'ReactJS', isDone: false},
+//
+//     ],
+//     [todolistID2]: [
+//         {id: v1(), title: 'Rest API', isDone: true},
+//         {id: v1(), title: 'GraphQL', isDone: false},
+//     ]
+// })

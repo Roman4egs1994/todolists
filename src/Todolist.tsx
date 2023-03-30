@@ -1,5 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {FilteredTaskType} from "./App";
+import React, {ChangeEvent} from 'react';
 import {ButtonHandler} from "./common/components/Button/ButtonHandler";
 import style from './todolist.module.css'
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
@@ -7,6 +6,7 @@ import {EditableSpan} from "./components/EditableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Checkbox from '@mui/material/Checkbox';
+import {FilteredTaskType} from "./store/todolist-reducer";
 
 
 export type TaskType = {
