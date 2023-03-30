@@ -1,6 +1,6 @@
-import {TodolistType} from "../App";
+import {FilteredTaskType, TodolistType} from "../App";
 import {v1} from "uuid";
-import {FilteredTaskType} from "../AppWithReducers";
+
 
 /** REDUCER всех действий связанных с Todolist*/
 export const todolistReducer = (state: TodolistType[], action: ActionTodolistType):TodolistType[] => {
