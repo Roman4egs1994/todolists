@@ -1,5 +1,6 @@
 import {TodolistType} from "../App";
 import {v1} from "uuid";
+import {FilteredTaskType} from "../AppWithReducers";
 
 /** REDUCER всех действий связанных с Todolist*/
 export const todolistReducer = (state: TodolistType[], action: ActionTodolistType):TodolistType[] => {
@@ -14,6 +15,11 @@ export const todolistReducer = (state: TodolistType[], action: ActionTodolistTyp
         }
         case "CHANGE-TODOLIST-TITLE": {
             return state.map((todo) => todo.id === action.todolistId ? {...todo, title: action.newTitle} : todo)
+        }
+        case "CHANGE-FILTER": {
+            return state.map((todo) => todo.id === action.todolistId
+                ? {...todo,filter: action.value}
+                : todo)
         }
         default: {
             return state
@@ -46,15 +52,22 @@ export const changeTodolistTitleAC = (todolistId:string,newTitle:string) =>{
     }as const
 }
 
-
+export const changeFilterAC = (todolistId:string, value: FilteredTaskType) => {
+    return {
+        type: "CHANGE-FILTER",
+        todolistId,
+        value
+    } as const
+}
 
 /** ТИПИЗАЦИЯ ACTION CREATOR*/
 export type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistACType = ReturnType<typeof addTodolistAC>
 type ChangeTodolistTitleAC = ReturnType<typeof changeTodolistTitleAC>
-
+type ChangeFilterACType = ReturnType<typeof changeFilterAC>
 
 /** ТИПИЗАЦИЯ РЕДЮСЕРА*/
 type ActionTodolistType = RemoveTodolistType
     | AddTodolistACType
     | ChangeTodolistTitleAC
+    | ChangeFilterACType
