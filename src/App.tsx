@@ -36,13 +36,13 @@ function App() {
     },[dispatch])
 
     /** CHANGE-TITLE-TODOLIST*/
-    const changeTodolistTitle = (todolistId: string, newTitle: string) => {
+    const changeTodolistTitle = useCallback((todolistId: string, newTitle: string) => {
         dispatch(changeTodolistTitleAC(todolistId,newTitle))
-    }
+    },[dispatch])
     /** DELETE-TODOLIST*/
-    const deleteTodolist = (todolistsId: string) => {
+    const deleteTodolist = useCallback((todolistsId: string) => {
         dispatch(removeTodolistAC(todolistsId))
-    }
+    },[dispatch])
 
 
     /** ADD-TASK*/
@@ -51,23 +51,23 @@ function App() {
     },[dispatch])
 
     /** DELETE-TASK*/
-    const removeTask = (todolistId: string, taskId: string) => {
+    const removeTask = useCallback((todolistId: string, taskId: string) => {
         dispatch(removeTaskAC(todolistId,taskId))
-    }
+    },[dispatch])
     /** CHANGE TITLE TASK*/
-    const changeTaskTitle = (todolistId: string, taskId: string, newTitle: string) => {
+    const changeTaskTitle = useCallback((todolistId: string, taskId: string, newTitle: string) => {
         dispatch(changeTaskTitleAC(todolistId,taskId,newTitle))
-    }
+    },[dispatch])
 
     /** CHECKED IS-DONE TASK*/
-    const changeTaskStatus = (todolistId: string, taskId: string, newIsDone: boolean) => {
+    const changeTaskStatus = useCallback((todolistId: string, taskId: string, newIsDone: boolean) => {
         dispatch(changeTaskStatusAC(todolistId,taskId,newIsDone))
-    }
+    },[dispatch])
 
     /** FILTERED-TASK-START--------------------------------------------------------*/
-    const changeFilter = (todolistId: string, value: FilteredTaskType) => {
+    const changeFilter = useCallback((todolistId: string, value: FilteredTaskType) => {
         dispatch(changeFilterAC(todolistId,value))
-    }
+    },[dispatch])
 
     return (
         <div>
@@ -77,23 +77,17 @@ function App() {
                     <AddItemForm callBack={addTodolistHandler}/>
                 </Grid>
                 <Grid container spacing={3}>
-                    {todolists?.map((el) => {
+                    {todolists.map((el) => {
 
-                        let filterTask = tasks[el.id] //all
-                        if (el.filter === 'completed') {
-                            filterTask = tasks[el.id].filter((tasks) => tasks.isDone)
-                        }
-                        if (el.filter === 'active') {
-                            filterTask = tasks[el.id].filter((tasks) => !tasks.isDone)
-                        }
+
                         return (
                             <Grid item key={el.id}>
                                 <Paper style={{padding: '10px'}} elevation={3}>
+
                                     <Todolist
-                                        // key={el.id}
                                         todolistId={el.id}
                                         title={el.title}
-                                        tasks={filterTask}
+                                        tasks={tasks[el.id]}
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
                                         filter={el.filter}

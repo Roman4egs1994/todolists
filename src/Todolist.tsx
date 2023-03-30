@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback} from 'react';
+import React, {ChangeEvent, memo, useCallback} from 'react';
 import {ButtonHandler} from "./common/components/Button/ButtonHandler";
 import style from './todolist.module.css'
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
@@ -29,10 +29,12 @@ type PropsType = {
     changeTodolistTitle: (todolistId: string, newTitle: string) => void
 }
 
-export function Todolist(props: PropsType) {
+export const  Todolist = memo((props: PropsType) => {
 
+    console.log('rendering Todolist')
 
-    const onclickFilteredTaskHandler = (todolistId: string, buttonName: FilteredTaskType) => {
+    /** FILTER-TASKS*/
+    const onclickFilteredTaskHandler = useCallback((todolistId: string, buttonName: FilteredTaskType) => {
         if (buttonName === 'completed') {
             props.changeFilter(props.todolistId, 'completed')
         } else if (buttonName === 'active') {
@@ -40,7 +42,7 @@ export function Todolist(props: PropsType) {
         } else if (buttonName === 'all') {
             props.changeFilter(props.todolistId, 'all')
         }
-    }
+    },[props.changeFilter,props.todolistId])
 
     /** DELETE-TODOLIST*/
     const onClickDeleteTodoHandler = () => {
@@ -61,6 +63,16 @@ export function Todolist(props: PropsType) {
      /** Cтили для кнопок фильтрации*/
     const cssInlineStyleButton = {margin: '3px'}
 
+
+    /** Фильтрация тасок */
+    let tasks = props.tasks //all
+    if (props.filter === 'completed') {
+       tasks = tasks.filter((tasks) => tasks.isDone)
+    }
+    if (props.filter === 'active') {
+        tasks = tasks.filter((tasks) => !tasks.isDone)
+    }
+
     return <div>
         <h3>
             <EditableSpan title={props.title} callBack={onChangeTodolistTitleHandler}/>
@@ -69,8 +81,11 @@ export function Todolist(props: PropsType) {
             </IconButton>
         </h3>
         <AddItemForm callBack={addTaskHandler}/>
+
+
+
         <ul>
-            {props.tasks.map((task) => {
+            {tasks.map((task) => {
 
                 /** DELETE-TASK*/
                 const onclickDeleteTaskHandler = () => {
@@ -127,4 +142,4 @@ export function Todolist(props: PropsType) {
             />
         </div>
     </div>
-}
+})
