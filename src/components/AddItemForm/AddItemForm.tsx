@@ -1,6 +1,5 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {ButtonHandler} from "../../common/components/Button/ButtonHandler";
-import style from "../../todolist.module.css";
 import TextField from '@mui/material/TextField';
 
 type AddItemFormPropsType = {
@@ -8,7 +7,7 @@ type AddItemFormPropsType = {
 }
 
 
-export const AddItemForm = (props:AddItemFormPropsType) => {
+export const AddItemForm = memo ((props:AddItemFormPropsType) => {
 
     const [title, setTitle] = useState(``)
     const [error, setError] = useState<null | string>('')
@@ -31,6 +30,7 @@ export const AddItemForm = (props:AddItemFormPropsType) => {
 
     /** ADD-TASK FOR ENTER*/
     const onDoubleClickAddTaskTitleHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+       if(error) setError(null) //Убираем доп. ререндер
         if (event.key === 'Enter') {
             onclickButtonAddTaskHandler()
         }
@@ -54,4 +54,4 @@ export const AddItemForm = (props:AddItemFormPropsType) => {
             {/*{error && <div className={style.error}>{error}</div>}*/}
         </div>
     );
-};
+});

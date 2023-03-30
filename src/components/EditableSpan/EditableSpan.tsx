@@ -19,13 +19,10 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
         setEdit(!edit)
     }
 
-    // <input />
-
     return (
         edit
             ? <TextField
                 id="standard-basic"
-                // label="Standard"
                 variant="standard"
                 value={newTitle}
                 onChange={onChangeInputHandler}

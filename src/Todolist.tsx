@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import {ButtonHandler} from "./common/components/Button/ButtonHandler";
 import style from './todolist.module.css'
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
@@ -48,16 +48,17 @@ export function Todolist(props: PropsType) {
     }
 
     /** ADD-TASK*/
-    const addTaskHandler = (title: string) => {
+    const addTaskHandler = useCallback((title: string) => {
         props.addTask(props.todolistId, title)
-    }
+    },[props.addTask,props.todolistId])
 
     /** CHANGE-TITLE-TODOLIST*/
     const onChangeTodolistTitleHandler = (newTitle: string) => {
         props.changeTodolistTitle(props.todolistId, newTitle)
     }
 
-    // /** Cтили для кнопок фильтрации*/
+
+     /** Cтили для кнопок фильтрации*/
     const cssInlineStyleButton = {margin: '3px'}
 
     return <div>
@@ -82,6 +83,7 @@ export function Todolist(props: PropsType) {
                     props.changeTaskStatus(props.todolistId, task.id, eventTask)
                 }
 
+                /** CHECKED IS-DONE TASK*/
                 const onClickEditTitleHandler = (newTitle: string) => {
                     props.changeTaskTitle(props.todolistId, task.id, newTitle)
                 }

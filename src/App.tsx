@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
@@ -24,17 +24,16 @@ import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskStat
 
 function App() {
 
+    /** State in from Store*/
     const todolists = useSelector<AppRootStateType,TodolistType[]>((state)=> state.todolist)
     const tasks = useSelector<AppRootStateType,TaskStateType>((state)=>state.task)
     const dispatch = useDispatch()
 
 
-
-
     /** ADD-TODOLIST*/
-    const addTodolistHandler = (title: string) => {
+    const addTodolistHandler = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
-    }
+    },[dispatch])
 
     /** CHANGE-TITLE-TODOLIST*/
     const changeTodolistTitle = (todolistId: string, newTitle: string) => {
@@ -47,9 +46,9 @@ function App() {
 
 
     /** ADD-TASK*/
-    const addTask = (todolistId: string, title: string) => {
+    const addTask = useCallback((todolistId: string, title: string) => {
         dispatch(addTaskAC(todolistId,title))
-    }
+    },[dispatch])
 
     /** DELETE-TASK*/
     const removeTask = (todolistId: string, taskId: string) => {
@@ -88,10 +87,10 @@ function App() {
                             filterTask = tasks[el.id].filter((tasks) => !tasks.isDone)
                         }
                         return (
-                            <Grid item>
+                            <Grid item key={el.id}>
                                 <Paper style={{padding: '10px'}} elevation={3}>
                                     <Todolist
-                                        key={el.id}
+                                        // key={el.id}
                                         todolistId={el.id}
                                         title={el.title}
                                         tasks={filterTask}
