@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react';
+import React, {CSSProperties, memo} from 'react';
 import Button from '@mui/material/Button';
 
 /** Универсальная компонента :Button (Использует стили Material UI)
@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
  * */
 
 
-type ButtonPropsType = {
+type ButtonFilterPropsType = {
     disabled?: boolean
     title: string
     callBack: () => void
@@ -19,14 +19,14 @@ type ButtonPropsType = {
 }
 
 
-export const ButtonHandler: React.FC<ButtonPropsType> = (props) => {
+export const ButtonFilterTask: React.FC<ButtonFilterPropsType> = memo((props) => {
     const {title, callBack, className, disabled,style,variant,...otherProps} = props
 
     const onclickButtonHandler = () => {
         callBack()
     }
 
-
+    console.log('RENDER', props.title)
     return (
         <Button
             style={style}
@@ -38,5 +38,5 @@ export const ButtonHandler: React.FC<ButtonPropsType> = (props) => {
             {title}
         </Button>
     );
-};
+});
 

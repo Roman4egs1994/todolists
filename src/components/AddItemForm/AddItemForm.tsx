@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
-import {ButtonHandler} from "../../common/components/Button/ButtonHandler";
+import {ButtonFilterTask} from "../../common/components/Button/ButtonFilterTask";
 import TextField from '@mui/material/TextField';
 
 type AddItemFormPropsType = {
@@ -50,7 +50,7 @@ export const AddItemForm = memo ((props:AddItemFormPropsType) => {
                 onChange={onChangeInputTitleTaskHandler}
                 onKeyPress={onDoubleClickAddTaskTitleHandler}
             />
-            <ButtonHandler title={'+'} callBack={onclickButtonAddTaskHandler} variant={'contained'} style={cssInlineStyle}/>
+            <ButtonFilterTask title={'+'} callBack={onclickButtonAddTaskHandler} variant={'contained'} style={cssInlineStyle}/>
             {/*{error && <div className={style.error}>{error}</div>}*/}
         </div>
     );

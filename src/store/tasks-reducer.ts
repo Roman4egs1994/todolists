@@ -13,7 +13,7 @@ export const tasksReducer = (state = initialState, action: ActionTasksType): Tas
             return {...state, [action.todolistId]: state[action.todolistId].filter((task) => task.id !== action.taskId)}
         }
         case "ADD-TASK": {
-            const newTask = {id: v1(), title: action.title, isDone: false}
+            const newTask:TaskType = {id: v1(), title: action.title, isDone: false}
             return {...state, [action.todolistId]: [newTask, ...state[action.todolistId]]}
         }
         case "CHANGE-TASK-STATUS": {
