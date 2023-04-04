@@ -5,7 +5,7 @@
 
 import React, {useReducer, useState} from 'react';
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+// import {TaskType, Todolist} from './Todolist';
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {v1} from "uuid";
 import ButtonAppBar from "./components/ButtonAppBar/ButtonAppBar";

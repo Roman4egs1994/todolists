@@ -12,24 +12,15 @@ import {
     addTodolistAC, changeFilterTodolistAC,
     changeTodolistTitleAC,
     FilteredTaskType,
-    removeTodolistAC,
-    TodolistType
+    removeTodolistAC, TodolistDomainType
 } from "./store/todolist-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskStateType} from "./store/tasks-reducer";
-import {todolistApi} from "./api/todolist-api";
-
-
-
-
-
-
-
-
+import {TaskStatuses} from "./api/todolist-api";
 
 function App() {
 
     /** State in from Store*/
-    const todolists = useSelector<AppRootStateType,TodolistType[]>((state)=> state.todolist)
+    const todolists = useSelector<AppRootStateType,TodolistDomainType[]>((state)=> state.todolist)
     const tasks = useSelector<AppRootStateType,TaskStateType>((state)=>state.task)
     const dispatch = useDispatch()
 
@@ -64,8 +55,8 @@ function App() {
     },[dispatch])
 
     /** CHECKED IS-DONE TASK*/
-    const changeTaskStatus = useCallback((todolistId: string, taskId: string, newIsDone: boolean) => {
-        dispatch(changeTaskStatusAC(todolistId,taskId,newIsDone))
+    const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
+        dispatch(changeTaskStatusAC(todolistId,taskId,status))
     },[dispatch])
 
     /** FILTERED-TASK-START--------------------------------------------------------*/

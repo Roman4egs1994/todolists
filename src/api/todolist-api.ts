@@ -60,21 +60,37 @@ type ResponseType<T = {}> = {
 }
 
 
+
+export enum TaskStatuses {
+    New, //IsDone = false
+    InProgress,
+    Completed, //IsDone = true
+    Draft
+}
+export enum TaskPriorities {
+    Low,
+    Middle,
+    Hi,
+    Urgently,
+    Later
+}
+
+
 export type TaskType = {
     id: string
     title: string
     description: string
     todolistId: string
     order: number
-    status: number
-    priority: number
+    status: TaskStatuses //IsDone
+    priority: TaskPriorities
     startDate: string
     deadline:string
     addedDate: string
 }
 
 
-/** Для обновления Task */
+/** Для обновления Task (title и isDone) */
 export type UpdateTaskModelType = {
     title: string
     description: string

@@ -4,19 +4,19 @@ import style from "../../todolist.module.css";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {TaskType} from "../../Todolist";
+import {TaskStatuses, TaskType} from "../../api/todolist-api";
 
 export type TaskPropsType = {
     task: TaskType
     removeTask: (taskId: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    changeTaskStatus: (taskId: string, status: TaskStatuses) => void
     changeTaskTitle: (taskId: string, newTitle: string) => void
 }
 
 export const Task = memo(({task, removeTask, changeTaskStatus, changeTaskTitle}: TaskPropsType) => {
 
 
-    let {id, title, isDone} = {...task}
+    let {id, title, status} = {...task}
 
     /** DELETE-TASK*/
     const onclickDeleteTaskHandler = () => {
@@ -25,7 +25,7 @@ export const Task = memo(({task, removeTask, changeTaskStatus, changeTaskTitle}:
 
     /** CHECKED IS-DONE TASK*/
     const onChangeIsDoneTaskHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        const eventTask = event.currentTarget.checked
+        const eventTask = event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
         changeTaskStatus(id, eventTask)
     }
 
@@ -38,8 +38,8 @@ export const Task = memo(({task, removeTask, changeTaskStatus, changeTaskTitle}:
         <div>
             <Checkbox
                 onChange={onChangeIsDoneTaskHandler}
-                checked={isDone}
-                className={isDone ? style.isDoneTask : ""}
+                checked={status === TaskStatuses.Completed}
+                className={status === TaskStatuses.Completed ? style.isDoneTask : ""}
             />
             <EditableSpan title={title} callBack={onClickEditTitleHandler}/>
 

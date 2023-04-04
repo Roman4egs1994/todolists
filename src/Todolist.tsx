@@ -1,20 +1,15 @@
 import React, {ChangeEvent, memo, useCallback} from 'react';
 import {ButtonFilterTask} from "./common/components/Button/ButtonFilterTask";
-import style from './todolist.module.css'
+
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Checkbox from '@mui/material/Checkbox';
 import {FilteredTaskType} from "./store/todolist-reducer";
 import {Task} from "./components/task/Task";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
 type PropsType = {
     todolistId: string
@@ -24,7 +19,7 @@ type PropsType = {
     changeFilter: (todolistId: string, value: FilteredTaskType) => void
     filter: FilteredTaskType
     addTask: (todolistId: string, title: string) => void
-    changeTaskStatus: (todolistId: string, taskId: string, newIsDone: boolean) => void
+    changeTaskStatus: (todolistId: string, taskId: string, status: TaskStatuses) => void
     deleteTodolist: (todolistId: string) => void
     changeTaskTitle: (todolistId: string, taskId: string, newTitle: string) => void
     changeTodolistTitle: (todolistId: string, newTitle: string) => void
@@ -67,10 +62,10 @@ export const Todolist = memo((props: PropsType) => {
     /** Фильтрация тасок */
     let tasks = props.tasks //all
     if (props.filter === 'completed') {
-        tasks = tasks.filter((tasks) => tasks.isDone)
+        tasks = tasks.filter((tasks) => tasks.status)
     }
     if (props.filter === 'active') {
-        tasks = tasks.filter((tasks) => !tasks.isDone)
+        tasks = tasks.filter((tasks) => !tasks.status)
     }
 
 
@@ -80,9 +75,9 @@ export const Todolist = memo((props: PropsType) => {
     }, [props.removeTask, props.todolistId])
 
     /** CHECKED IS-DONE TASK*/
-    const onChangeIsDoneTaskHandler = useCallback((taskId: string, isDone: boolean) => {
+    const onChangeIsDoneTaskHandler = useCallback((taskId: string, status: TaskStatuses) => {
         // let eventTask = event.currentTarget.checked
-        props.changeTaskStatus(props.todolistId, taskId, isDone)
+        props.changeTaskStatus(props.todolistId, taskId, status)
     }, [props.removeTask, props.todolistId])
 
     /** CHECKED IS-DONE TASK*/
@@ -125,7 +120,7 @@ export const Todolist = memo((props: PropsType) => {
             />
             <ButtonFilterTask
                 style={cssInlineStyleButton}
-                title={'Completed'}
+                title={'Complete'}
                 callBack={() => onclickFilteredTaskHandler(props.todolistId, 'completed')}
                 variant={props.filter === 'completed' ? "contained" : 'outlined'}
             />
