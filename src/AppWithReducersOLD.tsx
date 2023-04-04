@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import {
     addTodolistAC,
-    changeFilterAC,
+    changeFilterTodolistAC,
     changeTodolistTitleAC,
     removeTodolistAC,
     todolistReducer

@@ -53,7 +53,7 @@ export const changeTodolistTitleAC = (todolistId: string, newTitle: string) => {
     } as const
 }
 
-export const changeFilterAC = (todolistId: string, value: FilteredTaskType) => {
+export const changeFilterTodolistAC = (todolistId: string, value: FilteredTaskType) => {
     return {
         type: "CHANGE-FILTER",
         todolistId,
@@ -65,7 +65,7 @@ export const changeFilterAC = (todolistId: string, value: FilteredTaskType) => {
 export type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistACType = ReturnType<typeof addTodolistAC>
 type ChangeTodolistTitleAC = ReturnType<typeof changeTodolistTitleAC>
-type ChangeFilterACType = ReturnType<typeof changeFilterAC>
+type ChangeFilterACType = ReturnType<typeof changeFilterTodolistAC>
 
 /** ТИПИЗАЦИЯ РЕДЮСЕРА*/
 type ActionTodolistType = RemoveTodolistType

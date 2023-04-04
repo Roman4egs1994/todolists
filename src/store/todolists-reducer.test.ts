@@ -1,4 +1,11 @@
-import {addTodolistAC, changeTodolistTitleAC, removeTodolistAC, todolistReducer, TodolistType} from './todolist-reducer'
+import {
+    addTodolistAC,
+    changeFilterTodolistAC,
+    changeTodolistTitleAC,
+    removeTodolistAC,
+    todolistReducer,
+    TodolistType
+} from './todolist-reducer'
 import {v1} from 'uuid'
 
 let todolistId1: string
@@ -56,4 +63,13 @@ test('correct todolist should change its name', () => {
 
     expect(endState[0].title).toBe('What to learn')
     expect(endState[1].title).toBe(newTodolistTitle)
+})
+
+test('фильтр тудулиста должен поменяться' , () => {
+
+    const endState = todolistReducer(startState, changeFilterTodolistAC(todolistId1,'active') )
+
+
+    expect(endState[0].filter).toBe('active')
+    expect(startState[0].filter).toBe('all')
 })

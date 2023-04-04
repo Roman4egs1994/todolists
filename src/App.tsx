@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
@@ -9,13 +9,17 @@ import Grid from '@mui/material/Grid';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
 import {
-    addTodolistAC, changeFilterAC,
+    addTodolistAC, changeFilterTodolistAC,
     changeTodolistTitleAC,
     FilteredTaskType,
     removeTodolistAC,
     TodolistType
 } from "./store/todolist-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskStateType} from "./store/tasks-reducer";
+import {todolistApi} from "./api/todolist-api";
+
+
+
 
 
 
@@ -66,8 +70,16 @@ function App() {
 
     /** FILTERED-TASK-START--------------------------------------------------------*/
     const changeFilter = useCallback((todolistId: string, value: FilteredTaskType) => {
-        dispatch(changeFilterAC(todolistId,value))
+        dispatch(changeFilterTodolistAC(todolistId,value))
     },[dispatch])
+
+    // useEffect(()=>{
+    //     todolistApi.getTodolist()
+    //         .then((res)=>{
+    //             res.data
+    //         })
+    // },[])
+
 
     return (
         <div>
