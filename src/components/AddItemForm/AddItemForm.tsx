@@ -19,6 +19,7 @@ export const AddItemForm = memo ((props:AddItemFormPropsType) => {
 
     /** ADD-TASK*/
     const onclickButtonAddTaskHandler = () => {
+
         if (title.trim() !== '') {
             props.callBack(title.trim())
             setTitle('')

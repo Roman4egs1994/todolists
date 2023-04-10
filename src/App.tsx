@@ -12,51 +12,71 @@ import {
     addTodolistAC, changeFilterTodolistAC,
     changeTodolistTitleAC,
     FilteredTaskType,
-    removeTodolistAC, TodolistDomainType
+    removeTodolistAC, TodolistDomainType, getTodoListsTC, deleteTodoListTC, addTodoListTC, updateTitleTodolistTC
 } from "./store/todolist-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskStateType} from "./store/tasks-reducer";
-import {TaskStatuses} from "./api/todolist-api";
+import {
+    addTaskAC, addTaskTC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    deleteTaskTC,
+    removeTaskAC,
+    TaskStateType, updateTaskStatusTC, updateTitleStatusTC
+} from "./store/tasks-reducer";
+import {TaskStatuses, todolistApi} from "./api/todolist-api";
+import {useAppDispatch} from "./store/castomUseAppDispatch";
 
 function App() {
 
     /** State in from Store*/
     const todolists = useSelector<AppRootStateType,TodolistDomainType[]>((state)=> state.todolist)
     const tasks = useSelector<AppRootStateType,TaskStateType>((state)=>state.task)
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
+        const dispatch = useAppDispatch()
 
+    useEffect(()=> {
+       dispatch(getTodoListsTC()) //Получение тудулистов
+    },[])
 
     /** ADD-TODOLIST*/
     const addTodolistHandler = useCallback((title: string) => {
-        dispatch(addTodolistAC(title))
+        // dispatch(addTodolistAC(title))
+        dispatch(addTodoListTC(title))
     },[dispatch])
 
     /** CHANGE-TITLE-TODOLIST*/
     const changeTodolistTitle = useCallback((todolistId: string, newTitle: string) => {
-        dispatch(changeTodolistTitleAC(todolistId,newTitle))
+        // dispatch(changeTodolistTitleAC(todolistId,newTitle))
+        dispatch(updateTitleTodolistTC(todolistId,newTitle))
     },[dispatch])
     /** DELETE-TODOLIST*/
     const deleteTodolist = useCallback((todolistsId: string) => {
-        dispatch(removeTodolistAC(todolistsId))
+        // dispatch(removeTodolistAC(todolistsId))
+        dispatch(deleteTodoListTC(todolistsId))
     },[dispatch])
 
 
     /** ADD-TASK*/
     const addTask = useCallback((todolistId: string, title: string) => {
-        dispatch(addTaskAC(todolistId,title))
+        // dispatch(addTaskAC(todolistId,title))
+
+            dispatch(addTaskTC(todolistId,title))
     },[dispatch])
 
     /** DELETE-TASK*/
     const removeTask = useCallback((todolistId: string, taskId: string) => {
-        dispatch(removeTaskAC(todolistId,taskId))
+        // dispatch(removeTaskAC(todolistId,taskId))
+        dispatch(deleteTaskTC(todolistId,taskId))
     },[dispatch])
     /** CHANGE TITLE TASK*/
     const changeTaskTitle = useCallback((todolistId: string, taskId: string, newTitle: string) => {
-        dispatch(changeTaskTitleAC(todolistId,taskId,newTitle))
+        // dispatch(changeTaskTitleAC(todolistId,taskId,newTitle))
+        dispatch(updateTitleStatusTC(todolistId,taskId,newTitle))
     },[dispatch])
 
     /** CHECKED IS-DONE TASK*/
     const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
-        dispatch(changeTaskStatusAC(todolistId,taskId,status))
+        // dispatch(changeTaskStatusAC(todolistId,taskId,status))
+        dispatch(updateTaskStatusTC(todolistId,taskId,status))
     },[dispatch])
 
     /** FILTERED-TASK-START--------------------------------------------------------*/
@@ -64,12 +84,6 @@ function App() {
         dispatch(changeFilterTodolistAC(todolistId,value))
     },[dispatch])
 
-    // useEffect(()=>{
-    //     todolistApi.getTodolist()
-    //         .then((res)=>{
-    //             res.data
-    //         })
-    // },[])
 
 
     return (
@@ -81,8 +95,6 @@ function App() {
                 </Grid>
                 <Grid container spacing={3}>
                     {todolists.map((el) => {
-
-
                         return (
                             <Grid item key={el.id}>
                                 <Paper style={{padding: '10px'}} elevation={3}>

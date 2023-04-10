@@ -16,32 +16,32 @@ export type TaskPropsType = {
 export const Task = memo(({task, removeTask, changeTaskStatus, changeTaskTitle}: TaskPropsType) => {
 
 
-    let {id, title, status} = {...task}
+
 
     /** DELETE-TASK*/
     const onclickDeleteTaskHandler = () => {
-        removeTask(id)
+        removeTask(task.id)
     }
 
     /** CHECKED IS-DONE TASK*/
     const onChangeIsDoneTaskHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const eventTask = event.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
-        changeTaskStatus(id, eventTask)
+        changeTaskStatus(task.id, eventTask)
     }
 
     /** CHECKED IS-DONE TASK*/
     const onClickEditTitleHandler = (newTitle: string) => {
-        changeTaskTitle(id, newTitle)
+        changeTaskTitle(task.id, newTitle)
     }
 
     return (
         <div>
             <Checkbox
                 onChange={onChangeIsDoneTaskHandler}
-                checked={status === TaskStatuses.Completed}
-                className={status === TaskStatuses.Completed ? style.isDoneTask : ""}
+                checked={task.status === TaskStatuses.Completed}
+                className={task.status === TaskStatuses.Completed ? style.isDoneTask : ""}
             />
-            <EditableSpan title={title} callBack={onClickEditTitleHandler}/>
+            <EditableSpan title={task.title} callBack={onClickEditTitleHandler}/>
 
             <IconButton aria-label="delete" onClick={onclickDeleteTaskHandler}>
                 <DeleteIcon/>

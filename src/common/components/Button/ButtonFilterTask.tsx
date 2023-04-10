@@ -26,7 +26,6 @@ export const ButtonFilterTask: React.FC<ButtonFilterPropsType> = memo((props) =>
         callBack()
     }
 
-    console.log('RENDER', props.title)
     return (
         <Button
             style={style}

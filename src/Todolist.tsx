@@ -1,4 +1,4 @@
-import React, {ChangeEvent, memo, useCallback} from 'react';
+import React, {ChangeEvent, memo, useCallback, useEffect} from 'react';
 import {ButtonFilterTask} from "./common/components/Button/ButtonFilterTask";
 
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
@@ -8,6 +8,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {FilteredTaskType} from "./store/todolist-reducer";
 import {Task} from "./components/task/Task";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {useAppDispatch} from "./store/castomUseAppDispatch";
+import {setTaskTC} from "./store/tasks-reducer";
 
 
 
@@ -27,6 +29,11 @@ type PropsType = {
 
 export const Todolist = memo((props: PropsType) => {
 
+    const dispatch = useAppDispatch()
+
+    useEffect(()=> {
+       dispatch(setTaskTC(props.todolistId))
+    },[])
 
     /** FILTER-TASKS*/
     const onclickFilteredTaskHandler = useCallback((todolistId: string, buttonName: FilteredTaskType) => {
@@ -46,6 +53,7 @@ export const Todolist = memo((props: PropsType) => {
 
     /** ADD-TASK*/
     const addTaskHandler = useCallback((title: string) => {
+
         props.addTask(props.todolistId, title)
     }, [props.addTask, props.todolistId])
 
@@ -80,7 +88,7 @@ export const Todolist = memo((props: PropsType) => {
         props.changeTaskStatus(props.todolistId, taskId, status)
     }, [props.removeTask, props.todolistId])
 
-    /** CHECKED IS-DONE TASK*/
+    /** CHECKED TITLE TASK*/
     const onClickEditTitleHandler = useCallback((taskId: string, newTitle: string) => {
         props.changeTaskTitle(props.todolistId, taskId, newTitle)
     }, [props.changeTaskTitle, props.todolistId])
