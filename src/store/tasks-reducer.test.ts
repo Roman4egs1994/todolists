@@ -1,9 +1,8 @@
 import {
     addTaskAC,
-    changeTaskStatusAC, changeTaskTitleAC,
-    removeTaskAC,
+    removeTaskAC, setTaskAC,
     tasksReducer,
-    TaskStateType
+    TaskStateType, updateTaskAC
 } from './tasks-reducer'
 import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
 import {addTodolistAC, getTodolistsAC, getTodoListsTC, removeTodolistAC} from "./todolist-reducer";
@@ -104,7 +103,7 @@ test('correct task should be deleted from correct array', () => {
 /** ИЗМЕНЕНИЕ СТАТУСА ТАСКИ*/
 test('status of specified task should be changed', () => {
 
-    const action = changeTaskStatusAC('todolistId2', '2', TaskStatuses.Completed)
+    const action = updateTaskAC('todolistId2', '2', {status:TaskStatuses.Completed})
     const endState = tasksReducer(startState, action)
 
     expect(endState['todolistId2'][1].status).toBe(TaskStatuses.Completed)
@@ -116,7 +115,7 @@ test('status of specified task should be changed', () => {
 /** ИЗМЕНЕНИЕ TITLE TASK*/
 test('title task of specified task should be changed', () => {
 
-    const action = changeTaskTitleAC('todolistId2', '2', 'bear')
+    const action = updateTaskAC('todolistId2', '2', {title:'bear'})
     const endState = tasksReducer(startState, action)
 
     expect(endState['todolistId2'][1].title).toBe('bear')
@@ -128,10 +127,11 @@ test('title task of specified task should be changed', () => {
 test('new array should be added when new todolist is added', () => {
 
     // const action = addTodolistAC('new todolist')
-    const action = addTodolistAC({id: 'todolistId3',title:"asd",order:1,addedDate:''})
+    const action = addTodolistAC({id: 'todolistId3', title: "asd", order: 1, addedDate: ''})
     const endState = tasksReducer(startState, action)
 
-    const keys = Object.keys(endState) /** Массив,тип данных:string, ['todolistId1','todolistId2','todolistId3'] */
+    const keys = Object.keys(endState)
+    /** Массив,тип данных:string, ['todolistId1','todolistId2','todolistId3'] */
     const newKey = keys.find(k => k != 'todolistId1' && k != 'todolistId2')  /** находим третий ключ */
     if (!newKey) {
         throw Error('new key should be added')
@@ -169,13 +169,13 @@ test('добавление новой таски', () => {
     },)
     const endState = tasksReducer(startState, action)
 
-        expect(endState['todolistId2'].length).toBe(4)
-        expect(endState['todolistId2'][0].id).toBeDefined()
-        expect(endState['todolistId2'][0].title).toBe('bear')
-        expect(endState['todolistId2'][0].status).toBe(TaskStatuses.New)
+    expect(endState['todolistId2'].length).toBe(4)
+    expect(endState['todolistId2'][0].id).toBeDefined()//существует
+    expect(endState['todolistId2'][0].title).toBe('bear')
+    expect(endState['todolistId2'][0].status).toBe(TaskStatuses.New)
 })
 
-test("Пустые массивы тасок должны быть добавлены , когда мы сетаем тудулисты", ()=>{
+test("Пустые массивы тасок должны быть добавлены , когда мы сетаем тудулисты", () => {
     const action = getTodolistsAC([
         {id: "1", title: "title1", order: 0, addedDate: ""},
         {id: "2", title: "title2", order: 0, addedDate: ""}
@@ -187,4 +187,18 @@ test("Пустые массивы тасок должны быть добавл�
     expect(keys.length).toBe(2)
     expect(endState["1"]).toStrictEqual([])
     expect(endState["2"]).toStrictEqual([])
+})
+
+
+test("Таски должны быть засетаны в ассоциативный массив", () => {
+    const action = setTaskAC('todolistId1', startState["todolistId1"])
+
+    const endState = tasksReducer({
+        "todolistId2": [],
+        "todolistId1": []
+    }, action)
+
+
+    expect(endState["todolistId1"].length).toBe(3)
+    expect(endState["todolistId2"].length).toBe(0)
 })

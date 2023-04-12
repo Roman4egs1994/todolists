@@ -61,30 +61,10 @@ export const getTodolistsAC = (todolists: TodolistType[]) => {
     return {type: "GET-TODOLISTS", todolists} as const
 }
 
-/** ТИПИЗАЦИЯ ACTION CREATOR*/
-export type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
-export type AddTodolistACType = ReturnType<typeof addTodolistAC>
-type ChangeTodolistTitleAC = ReturnType<typeof changeTodolistTitleAC>
-type ChangeFilterACType = ReturnType<typeof changeFilterTodolistAC>
-export type GetTodolistsACType = ReturnType<typeof getTodolistsAC>
-
-/** ТИПИЗАЦИЯ РЕДЮСЕРА*/
-type ActionTodolistType = RemoveTodolistType
-    | AddTodolistACType
-    | ChangeTodolistTitleAC
-    | ChangeFilterACType
-    | GetTodolistsACType
 
 
-/** ТИПИЗАЦИЯ INITIALSTATE*/
-export type FilteredTaskType = 'all' | 'active' | 'completed' //Типизация фильтрации тасок
 
-/** Составная типизация*/
-export type TodolistDomainType = TodolistType & {
-    filter: FilteredTaskType
-}
-
-
+/** THUNK CREATOR*/
 export const getTodoListsTC = () => {
     return (dispatch: Dispatch) => {
         todolistApi.getTodolist()
@@ -92,7 +72,6 @@ export const getTodoListsTC = () => {
                 dispatch(getTodolistsAC(res.data))
             })
     }
-
 }
 
 
@@ -121,4 +100,31 @@ export const updateTitleTodolistTC = (todolistId:string,title:string) => {
                 dispatch(changeTodolistTitleAC(todolistId,title))
             })
     }
+}
+
+
+
+
+
+/** ТИПИЗАЦИЯ ACTION CREATOR*/
+export type RemoveTodolistType = ReturnType<typeof removeTodolistAC>
+export type AddTodolistACType = ReturnType<typeof addTodolistAC>
+type ChangeTodolistTitleAC = ReturnType<typeof changeTodolistTitleAC>
+type ChangeFilterACType = ReturnType<typeof changeFilterTodolistAC>
+export type GetTodolistsACType = ReturnType<typeof getTodolistsAC>
+
+/** ТИПИЗАЦИЯ РЕДЮСЕРА*/
+type ActionTodolistType = RemoveTodolistType
+    | AddTodolistACType
+    | ChangeTodolistTitleAC
+    | ChangeFilterACType
+    | GetTodolistsACType
+
+
+/** ТИПИЗАЦИЯ INITIALSTATE*/
+export type FilteredTaskType = 'all' | 'active' | 'completed' //Типизация фильтрации тасок
+
+/** Составная типизация*/
+export type TodolistDomainType = TodolistType & {
+    filter: FilteredTaskType
 }

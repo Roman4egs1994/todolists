@@ -1,6 +1,5 @@
 import React, {ChangeEvent, memo, useCallback, useEffect} from 'react';
 import {ButtonFilterTask} from "./common/components/Button/ButtonFilterTask";
-
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';

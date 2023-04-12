@@ -19,7 +19,7 @@ import {
     removeTodolistAC,
     todolistReducer
 } from "./store/todolist-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./store/tasks-reducer";
+import {addTaskAC, updateTaskAC, removeTaskAC, tasksReducer} from "./store/tasks-reducer";
 
 // export type FilteredTaskType = 'all' | 'active' | 'completed'
 //

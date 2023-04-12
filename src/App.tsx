@@ -16,11 +16,8 @@ import {
 } from "./store/todolist-reducer";
 import {
     addTaskAC, addTaskTC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
     deleteTaskTC,
-    removeTaskAC,
-    TaskStateType, updateTaskStatusTC, updateTitleStatusTC
+    TaskStateType, updateTaskTC
 } from "./store/tasks-reducer";
 import {TaskStatuses, todolistApi} from "./api/todolist-api";
 import {useAppDispatch} from "./store/castomUseAppDispatch";
@@ -67,16 +64,17 @@ function App() {
         // dispatch(removeTaskAC(todolistId,taskId))
         dispatch(deleteTaskTC(todolistId,taskId))
     },[dispatch])
+
     /** CHANGE TITLE TASK*/
-    const changeTaskTitle = useCallback((todolistId: string, taskId: string, newTitle: string) => {
-        // dispatch(changeTaskTitleAC(todolistId,taskId,newTitle))
-        dispatch(updateTitleStatusTC(todolistId,taskId,newTitle))
+    const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
+        // // dispatch(changeTaskTitleAC(todolistId,taskId,newTitle))
+        dispatch(updateTaskTC(todolistId,taskId,{title: title}))
     },[dispatch])
 
     /** CHECKED IS-DONE TASK*/
     const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
         // dispatch(changeTaskStatusAC(todolistId,taskId,status))
-        dispatch(updateTaskStatusTC(todolistId,taskId,status))
+        dispatch(updateTaskTC(todolistId,taskId,{status: status}))
     },[dispatch])
 
     /** FILTERED-TASK-START--------------------------------------------------------*/
