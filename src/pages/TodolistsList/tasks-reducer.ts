@@ -1,7 +1,7 @@
-import {AddTodolistACType, GetTodolistsACType, RemoveTodolistType} from "./todolist-reducer";
-import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType} from "../api/todolist-api";
+import {AddTodolistACType, GetTodoListsACType, RemoveTodolistType} from "./todolist-reducer";
+import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType} from "../../api/todolist-api";
 import {Dispatch} from "redux";
-import {AppRootStateType} from "./store";
+import {AppRootStateType} from "../../app/store";
 
 const initialState: TaskStateType = {}
 
@@ -38,11 +38,11 @@ export const tasksReducer = (state = initialState, action: ActionTasksType): Tas
             }
         }
         case "ADD-TODOLIST": {
-            return {...state, [action.todolist.id]: []}
+            return {...state, [action.todo.id]: []}
         }
         case "REMOVE-TODOLIST": {
             let copyState = {...state}
-            delete copyState[action.todolistId] //Удаление тасок
+            delete copyState[action.tId] //Удаление тасок
             return copyState
         }
         default: {
@@ -53,22 +53,11 @@ export const tasksReducer = (state = initialState, action: ActionTasksType): Tas
 
 
 /** ACTION CREATOR*/
-export const removeTaskAC = (todolistId: string, taskId: string) => {
-    return {type: "REMOVE-TASK", todolistId, taskId} as const
-}
-
-
-export const addTaskAC = (task: TaskType,) => {
-    return {type: "ADD-TASK", task} as const
-}
-
-export const updateTaskAC = (todolistId: string, taskId: string, model: UpdateDomainTaskModalType) => {
-    return {type: 'UPDATE-TASK', taskId, todolistId, model} as const
-}
-
-export const setTaskAC = (todolistId: string, tasks: TaskType[]) => {
-    return {type: "SET-TASKS", todolistId, tasks} as const
-}
+export const removeTaskAC = (todolistId: string, taskId: string) => ({type: "REMOVE-TASK", todolistId, taskId} )as const
+export const addTaskAC = (task: TaskType,) => ({type: "ADD-TASK", task}) as const
+export const updateTaskAC = (todolistId: string, taskId: string, model: UpdateDomainTaskModalType) =>
+    ({type: 'UPDATE-TASK', taskId, todolistId, model}) as const
+export const setTaskAC = (todolistId: string, tasks: TaskType[]) => ({type: "SET-TASKS", todolistId, tasks}) as const
 
 
 /** THUNK CREATOR*/
@@ -100,16 +89,6 @@ export const addTaskTC = (todolistId: string, title: string) => {
 }
 
 
-/** Для обновления Task (title и isDone) */
-type UpdateDomainTaskModalType = {
-    title?: string
-    description?: string
-    status?: TaskStatuses
-    priority?: TaskPriorities
-    startDate?: string
-    deadline?: string
-}
-
 export const updateTaskTC = (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModalType) => {
 
     return (dispatch: Dispatch, getState: () => AppRootStateType) => {
@@ -138,12 +117,10 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
 
 
 
-
-/** ТИПИЗАЦИЯ ACTION CREATOR*/
-type RemoveTaskACType = ReturnType<typeof removeTaskAC>
-type AddTaskACType = ReturnType<typeof addTaskAC>
-type UpdateTaskACType = ReturnType<typeof updateTaskAC>
-type SetTaskACType = ReturnType<typeof setTaskAC>
+/** ТИПИЗАЦИЯ initialState*/
+export type TaskStateType = {
+    [key: string]: TaskType[]
+}
 
 /** ТИПИЗАЦИЯ РЕДЮСЕРА*/
 type ActionTasksType = RemoveTaskACType
@@ -151,12 +128,24 @@ type ActionTasksType = RemoveTaskACType
     | UpdateTaskACType
     | AddTodolistACType /** КЕЙС ИЗ ТУДУЛИСТА ДЛЯ СОЗДАНИЯ ПУСТОГО МАССИВА ТАСОК */
     | RemoveTodolistType
-    | GetTodolistsACType
+    | GetTodoListsACType
     | SetTaskACType
 
-/** ТИПИЗАЦИЯ initialState*/
-export type TaskStateType = {
-    [key: string]: TaskType[]
+/** ТИПИЗАЦИЯ ACTION CREATOR*/
+type RemoveTaskACType = ReturnType<typeof removeTaskAC>
+type AddTaskACType = ReturnType<typeof addTaskAC>
+type UpdateTaskACType = ReturnType<typeof updateTaskAC>
+type SetTaskACType = ReturnType<typeof setTaskAC>
+
+
+/** Для обновления Task (title и isDone) */
+type UpdateDomainTaskModalType = {
+    title?: string
+    description?: string
+    status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: string
+    deadline?: string
 }
 
 

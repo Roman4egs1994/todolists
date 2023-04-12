@@ -1,7 +1,7 @@
 import {
     addTodolistAC,
-    changeFilterTodolistAC,
-    changeTodolistTitleAC, getTodolistsAC,
+    filterTodolistAC,
+    changeTodolistTitleAC, getTodoListsAC,
     removeTodolistAC, TodolistDomainType,
     todolistReducer,
 } from './todolist-reducer'
@@ -68,7 +68,7 @@ test('correct todolist should change its name', () => {
 
 test('фильтр тудулиста должен поменяться' , () => {
 
-    const endState = todolistReducer(startState, changeFilterTodolistAC(todolistId1,'active') )
+    const endState = todolistReducer(startState, filterTodolistAC(todolistId1,'active') )
 
 
     expect(endState[0].filter).toBe('active')
@@ -81,7 +81,7 @@ test('фильтр тудулиста должен поменяться' , () =>
 /**СЕТАЕМ ТУДУЛИСТ*/
 test('тудулисты должны засетаться' ,()=>{
 
-    const action  = getTodolistsAC(startState)
+    const action  = getTodoListsAC(startState)
     const endState = todolistReducer([], action)
 
     expect(endState.length).toBe(2)

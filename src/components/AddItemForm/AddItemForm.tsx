@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
-import {ButtonFilterTask} from "../../common/components/Button/ButtonFilterTask";
+import {ButtonFilterTask} from "../Button/ButtonFilterTask";
 import TextField from '@mui/material/TextField';
 
 type AddItemFormPropsType = {

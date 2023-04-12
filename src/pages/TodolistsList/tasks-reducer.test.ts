@@ -4,8 +4,8 @@ import {
     tasksReducer,
     TaskStateType, updateTaskAC
 } from './tasks-reducer'
-import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
-import {addTodolistAC, getTodolistsAC, getTodoListsTC, removeTodolistAC} from "./todolist-reducer";
+import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
+import {addTodolistAC, getTodoListsAC, getTodoListsTC, removeTodolistAC} from "./todolist-reducer";
 
 let startState: TaskStateType
 
@@ -176,7 +176,7 @@ test('добавление новой таски', () => {
 })
 
 test("Пустые массивы тасок должны быть добавлены , когда мы сетаем тудулисты", () => {
-    const action = getTodolistsAC([
+    const action = getTodoListsAC([
         {id: "1", title: "title1", order: 0, addedDate: ""},
         {id: "2", title: "title2", order: 0, addedDate: ""}
     ])

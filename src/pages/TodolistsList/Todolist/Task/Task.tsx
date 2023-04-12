@@ -1,10 +1,10 @@
 import React, {ChangeEvent, memo} from 'react';
 import Checkbox from "@mui/material/Checkbox";
-import style from "../../todolist.module.css";
-import {EditableSpan} from "../EditableSpan/EditableSpan";
+import style from "../../../../todolist.module.css";
+import {EditableSpan} from "../../../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {TaskStatuses, TaskType} from "../../api/todolist-api";
+import {TaskStatuses, TaskType} from "../../../../api/todolist-api";
 
 export type TaskPropsType = {
     task: TaskType

@@ -50,22 +50,18 @@ export type TodolistType = {
     addedDate: string
     order: number
 }
-
 type ResponseType<T = {}> = {
     data: T
     message: string[]
     fieldsErrors: string[]
     resultCode: number
 }
-
-
 export enum TaskStatuses {
     New, //IsDone = false
     InProgress,
     Completed, //IsDone = true
     Draft
 }
-
 export enum TaskPriorities {
     Low,
     Middle,
@@ -73,8 +69,6 @@ export enum TaskPriorities {
     Urgently,
     Later
 }
-
-
 export type TaskType = {
     id: string
     title: string
@@ -87,8 +81,6 @@ export type TaskType = {
     deadline: string
     addedDate: string
 }
-
-
 /** Для обновления Task (title и isDone) */
 export type UpdateTaskModelType = {
     title: string
@@ -99,8 +91,6 @@ export type UpdateTaskModelType = {
     deadline: string
 
 }
-
-
 type GetTaskResponseType = {
     items: TaskType[]
     totalCount: number

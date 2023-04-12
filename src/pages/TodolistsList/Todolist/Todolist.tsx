@@ -1,14 +1,14 @@
 import React, {ChangeEvent, memo, useCallback, useEffect} from 'react';
-import {ButtonFilterTask} from "./common/components/Button/ButtonFilterTask";
-import {AddItemForm} from "./components/AddItemForm/AddItemForm";
-import {EditableSpan} from "./components/EditableSpan/EditableSpan";
+import {ButtonFilterTask} from "../../../components/Button/ButtonFilterTask";
+import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
+import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {FilteredTaskType} from "./store/todolist-reducer";
-import {Task} from "./components/task/Task";
-import {TaskStatuses, TaskType} from "./api/todolist-api";
-import {useAppDispatch} from "./store/castomUseAppDispatch";
-import {setTaskTC} from "./store/tasks-reducer";
+import {FilteredTaskType} from "../todolist-reducer";
+import {Task} from "./Task/Task";
+import {TaskStatuses, TaskType} from "../../../api/todolist-api";
+import {useAppDispatch} from "../../../app/castomDispatch/castomUseAppDispatch";
+import {setTaskTC} from "../tasks-reducer";
 
 
 
