@@ -10,17 +10,13 @@ import {TaskStatuses, TaskType} from "../../../api/todolist-api";
 import {useAppDispatch} from "../../../app/castomDispatch/castomUseAppDispatch";
 import {setTaskTC, TaskDomainType} from "../tasks-reducer";
 import {RequestStatusType} from "../../../app/app-reducer";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../app/store";
-
-
 
 
 type PropsType = {
     todolistId: string
     title: string
     removeTask: (todolistId: string, taskId: string) => void
-    tasks: Array<TaskType>
+    tasks: Array<TaskDomainType>
     changeFilter: (todolistId: string, value: FilteredTaskType) => void
     filter: FilteredTaskType
     addTask: (todolistId: string, title: string) => void
@@ -34,9 +30,6 @@ type PropsType = {
 export const Todolist = memo((props: PropsType) => {
 
     const dispatch = useAppDispatch()
-
-    let tasksTodo = useSelector<AppRootStateType,TaskDomainType[]>((state)=>state.task[props.todolistId])
-
 
     useEffect(()=> {
        dispatch(setTaskTC(props.todolistId))
@@ -77,8 +70,8 @@ export const Todolist = memo((props: PropsType) => {
     /** Фильтрация тасок */
 
 
-   // let tasks = props.tasks //all
-   let tasks = tasksTodo //all
+   let tasks = props.tasks //all
+   // let tasks = tasksTodo //all
     if (props.filter === 'completed') {
         tasks = tasks.filter((tasks) => tasks.status)
     }
@@ -120,7 +113,6 @@ export const Todolist = memo((props: PropsType) => {
                     removeTask={onclickDeleteTaskHandler}
                     changeTaskStatus={onChangeIsDoneTaskHandler}
                     changeTaskTitle={onClickEditTitleHandler}
-                    // entityTaskStatus={el.entityTaskStatus}
                     disabled={el.entityTaskStatus === 'loading'}
                 />
             )

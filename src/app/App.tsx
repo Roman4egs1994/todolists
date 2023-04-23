@@ -12,7 +12,6 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
-import {TaskStateType} from "../pages/TodolistsList/tasks-reducer";
 import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackbar} from "../components/errorSnackBar/ErrorSnackBar";
 
@@ -43,7 +42,6 @@ function App() {
                 </AppBar>
             </Box>
             {status === 'loading' && <LinearProgress color="inherit"/>}
-            {/*<ButtonAppBar/>*/}
             <Container fixed>
                 <TodoListsList/>
             </Container>

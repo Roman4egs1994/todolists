@@ -190,13 +190,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
                     dispatch(setLoadingStatusAC('succeeded'))
                     dispatch(changeTaskEntityStatusAC(todolistId,taskId,'succeeded'))
                 } else {
-                    if (res.data.messages.length) {
-                        dispatch(setErrorAC(res.data.messages[0]))
-                    } else {
-                        dispatch(setErrorAC('Error not found, contact technical support'))
-                        dispatch(changeTaskEntityStatusAC(todolistId,taskId,'failed'))
-                    }
-                    dispatch(dispatch(setLoadingStatusAC('failed')))
+                    handleServerAppThenError(dispatch,res.data)
                     dispatch(changeTaskEntityStatusAC(todolistId,taskId,'failed'))
                 }
             })

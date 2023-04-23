@@ -10,90 +10,90 @@ import {addTodolistAC, getTodoListsAC, getTodoListsTC, removeTodolistAC} from ".
 let startState: TaskStateType
 
 beforeEach(() => {
-    // startState = {
-    //     'todolistId1': [
-    //         {
-    //             id: '1',
-    //             title: 'CSS',
-    //             description: '',
-    //             todoListId: 'todolistId1',
-    //             order: 0,
-    //             status: TaskStatuses.New,
-    //             priority: TaskPriorities.Low,
-    //             startDate: '',
-    //             deadline: '',
-    //             addedDate: '',
-    //             entityTaskStatus: "idle"
-    //         },
-    //         {
-    //             id: '2',
-    //             title: 'JS',
-    //             description: '',
-    //             todoListId: 'todolistId1',
-    //             order: 0,
-    //             status: TaskStatuses.New,
-    //             priority: TaskPriorities.Low,
-    //             startDate: '',
-    //             deadline: '',
-    //             addedDate: '',
-    //             entityTaskStatus: "idle"
-    //         },
-    //         {
-    //             id: '3',
-    //             title: 'React',
-    //             description: '',
-    //             todoListId: 'todolistId1',
-    //             order: 0,
-    //             status: TaskStatuses.New,
-    //             priority: TaskPriorities.Low,
-    //             startDate: '',
-    //             deadline: '',
-    //             addedDate: '',
-    //             entityTaskStatus: "idle"
-    //         }
-    //     ],
-    //     'todolistId2': [
-    //         {
-    //             id: '1',
-    //             title: 'bread',
-    //             description: '',
-    //             todoListId: 'todolistId2',
-    //             order: 0,
-    //             status: TaskStatuses.New,
-    //             priority: TaskPriorities.Low,
-    //             startDate: '',
-    //             deadline: '',
-    //             addedDate: '',
-    //             entityTaskStatus: "idle"
-    //         },
-    //         {
-    //             id: '2',
-    //             title: 'milk',
-    //             description: '',
-    //             todoListId: 'todolistId2',
-    //             order: 0,
-    //             status: TaskStatuses.New,
-    //             priority: TaskPriorities.Low,
-    //             startDate: '',
-    //             deadline: '',
-    //             addedDate: '',
-    //             entityTaskStatus: "idle"
-    //         },
-    //         {
-    //             id: '3',
-    //             title: 'tea',
-    //             description: '',
-    //             todoListId: 'todolistId2',
-    //             order: 0,
-    //             status: TaskStatuses.New,
-    //             priority: TaskPriorities.Low,
-    //             startDate: '',
-    //             deadline: '',
-    //             addedDate: '',
-    //             entityTaskStatus: "idle"
-    //         }
-    //     ]
-    // }
+    startState = {
+        'todolistId1': [
+            {
+                id: '1',
+                title: 'CSS',
+                description: '',
+                todoListId: 'todolistId1',
+                order: 0,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                entityTaskStatus: "idle"
+            },
+            {
+                id: '2',
+                title: 'JS',
+                description: '',
+                todoListId: 'todolistId1',
+                order: 0,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                entityTaskStatus: "idle"
+            },
+            {
+                id: '3',
+                title: 'React',
+                description: '',
+                todoListId: 'todolistId1',
+                order: 0,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                entityTaskStatus: "idle"
+            }
+        ],
+        'todolistId2': [
+            {
+                id: '1',
+                title: 'bread',
+                description: '',
+                todoListId: 'todolistId2',
+                order: 0,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                entityTaskStatus: "idle"
+            },
+            {
+                id: '2',
+                title: 'milk',
+                description: '',
+                todoListId: 'todolistId2',
+                order: 0,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                entityTaskStatus: "idle"
+            },
+            {
+                id: '3',
+                title: 'tea',
+                description: '',
+                todoListId: 'todolistId2',
+                order: 0,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Low,
+                startDate: '',
+                deadline: '',
+                addedDate: '',
+                entityTaskStatus: "idle"
+            }
+        ]
+    }
 })
 
 
