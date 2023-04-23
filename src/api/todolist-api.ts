@@ -1,4 +1,5 @@
 import axios from "axios";
+import {RequestStatusType} from "../app/app-reducer";
 
 /** НАСТРОЙКИ API */
 const instance = axios.create({
@@ -50,9 +51,9 @@ export type TodolistType = {
     addedDate: string
     order: number
 }
-type ResponseType<T = {}> = {
+export type ResponseType<T = {}> = {
     data: T
-    message: string[]
+    messages: string[]
     fieldsErrors: string[]
     resultCode: number
 }
@@ -69,6 +70,11 @@ export enum TaskPriorities {
     Urgently,
     Later
 }
+export enum ResultCode {
+    Ok = 0,
+    Error = 1,
+    Captcha = 10
+}
 export type TaskType = {
     id: string
     title: string
@@ -81,6 +87,7 @@ export type TaskType = {
     deadline: string
     addedDate: string
 }
+
 /** Для обновления Task (title и isDone) */
 export type UpdateTaskModelType = {
     title: string

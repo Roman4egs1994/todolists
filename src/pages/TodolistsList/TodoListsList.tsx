@@ -9,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist/Todolist";
+import LinearProgress from '@mui/material/LinearProgress';
 
 export const TodoListsList = () => {
     /** State in from Store*/
@@ -70,13 +71,13 @@ export const TodoListsList = () => {
                     return (
                         <Grid item key={el.id}>
                             <Paper style={{padding: '10px'}} elevation={3}>
-
                                 <Todolist
                                     todolistId={el.id}
                                     title={el.title}
                                     tasks={tasks[el.id]}
                                     removeTask={removeTask}
                                     changeFilter={changeFilter}
+                                    entityStatus={el.entityStatus}
                                     filter={el.filter}
                                     addTask={addTask}
                                     changeTaskStatus={changeTaskStatus}

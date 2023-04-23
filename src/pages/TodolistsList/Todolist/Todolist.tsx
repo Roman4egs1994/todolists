@@ -1,4 +1,4 @@
-import React, {ChangeEvent, memo, useCallback, useEffect} from 'react';
+import React, { memo, useCallback, useEffect} from 'react';
 import {ButtonFilterTask} from "../../../components/Button/ButtonFilterTask";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
@@ -8,7 +8,11 @@ import {FilteredTaskType} from "../todolist-reducer";
 import {Task} from "./Task/Task";
 import {TaskStatuses, TaskType} from "../../../api/todolist-api";
 import {useAppDispatch} from "../../../app/castomDispatch/castomUseAppDispatch";
-import {setTaskTC} from "../tasks-reducer";
+import {setTaskTC, TaskDomainType} from "../tasks-reducer";
+import {RequestStatusType} from "../../../app/app-reducer";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../../../app/store";
+
 
 
 
@@ -24,11 +28,15 @@ type PropsType = {
     deleteTodolist: (todolistId: string) => void
     changeTaskTitle: (todolistId: string, taskId: string, newTitle: string) => void
     changeTodolistTitle: (todolistId: string, newTitle: string) => void
+    entityStatus: RequestStatusType
 }
 
 export const Todolist = memo((props: PropsType) => {
 
     const dispatch = useAppDispatch()
+
+    let tasksTodo = useSelector<AppRootStateType,TaskDomainType[]>((state)=>state.task[props.todolistId])
+
 
     useEffect(()=> {
        dispatch(setTaskTC(props.todolistId))
@@ -67,7 +75,10 @@ export const Todolist = memo((props: PropsType) => {
 
 
     /** Фильтрация тасок */
-    let tasks = props.tasks //all
+
+
+   // let tasks = props.tasks //all
+   let tasks = tasksTodo //all
     if (props.filter === 'completed') {
         tasks = tasks.filter((tasks) => tasks.status)
     }
@@ -95,11 +106,11 @@ export const Todolist = memo((props: PropsType) => {
     return <div>
         <h3>
             <EditableSpan title={props.title} callBack={onChangeTodolistTitleHandler}/>
-            <IconButton aria-label="delete" onClick={onClickDeleteTodoHandler}>
+            <IconButton aria-label="delete" onClick={onClickDeleteTodoHandler} disabled={props.entityStatus === 'loading'}>
                 <DeleteIcon/>
             </IconButton>
         </h3>
-        <AddItemForm callBack={addTaskHandler}/>
+        <AddItemForm callBack={addTaskHandler} disabled={props.entityStatus === 'loading'}/>
 
         {tasks.map((el) => {
             return (
@@ -109,6 +120,8 @@ export const Todolist = memo((props: PropsType) => {
                     removeTask={onclickDeleteTaskHandler}
                     changeTaskStatus={onChangeIsDoneTaskHandler}
                     changeTaskTitle={onClickEditTitleHandler}
+                    // entityTaskStatus={el.entityTaskStatus}
+                    disabled={el.entityTaskStatus === 'loading'}
                 />
             )
         })}

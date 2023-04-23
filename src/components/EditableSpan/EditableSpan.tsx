@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 type EditableSpanPropsType = {
     title: string
     callBack: (newTitle: string) => void
+    disabled?: boolean
 }
 
 export const EditableSpan = memo((props: EditableSpanPropsType) => {
@@ -29,8 +30,11 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
                 onChange={onChangeInputHandler}
                 onBlur={onDoubleClickHandler}
                 autoFocus
+                disabled={props.disabled}
             />
-            : <span onDoubleClick={onDoubleClickHandler}>{props.title}</span>
+            : <span
+                onDoubleClick={onDoubleClickHandler}
+            >{props.title}</span>
 
     );
 });
