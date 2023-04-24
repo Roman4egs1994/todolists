@@ -1,8 +1,17 @@
 .App {
+  position: relative;
   padding: 30px;
   display: flex;
 }
 
 .App > div {
   margin-right: 50px;
+}
+
+
+.linearProgress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 999;
 }

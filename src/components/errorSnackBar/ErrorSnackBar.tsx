@@ -12,7 +12,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 })
 
 export const  ErrorSnackbar = ()  => {
-    // const [open, setOpen] = useState(true)
+
 
     const error = useSelector<AppRootStateType, string | null>((state)=> state.appReducer.error)
     const dispatch = useAppDispatch()

@@ -1,5 +1,5 @@
 import {
-    addTaskAC,
+    addTaskAC, changeTaskEntityStatusAC,
     removeTaskAC, setTaskAC,
     tasksReducer,
     TaskStateType, updateTaskAC
@@ -207,4 +207,12 @@ test("Таски должны быть засетаны в ассоциатив�
 
     expect(endState["todolistId1"].length).toBe(3)
     expect(endState["todolistId2"].length).toBe(0)
+})
+
+
+test("EntityTaskStatus должен поменяться с 'idle' на 'loading'" , ()=> {
+    const endState = tasksReducer(startState,changeTaskEntityStatusAC('todolistId1','3', 'loading'))
+
+    expect(endState["todolistId1"][2].entityTaskStatus).toBe('loading')
+    expect(startState["todolistId1"][2].entityTaskStatus).toBe('idle')
 })

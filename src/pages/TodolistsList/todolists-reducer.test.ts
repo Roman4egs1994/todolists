@@ -3,7 +3,7 @@ import {
     filterTodolistAC,
     changeTodolistTitleAC, getTodoListsAC,
     removeTodolistAC, TodolistDomainType,
-    todolistReducer,
+    todolistReducer, changeTodolistEntityStatusAC,
 } from './todolist-reducer'
 
 let todolistId1: string
@@ -85,4 +85,12 @@ test('тудулисты должны засетаться' ,()=>{
     const endState = todolistReducer([], action)
 
     expect(endState.length).toBe(2)
+})
+
+
+test ('entityStatus должен измениться с "idle" на "loading"', ()=> {
+    const endState = todolistReducer(startState, changeTodolistEntityStatusAC('todolistId1', 'loading'))
+
+    expect(endState[0].entityStatus).toBe('loading')
+    expect(startState[0].entityStatus).toBe('idle')
 })

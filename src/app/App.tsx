@@ -41,7 +41,7 @@ function App() {
                     </Toolbar>
                 </AppBar>
             </Box>
-            {status === 'loading' && <LinearProgress color="inherit"/>}
+            {status === 'loading' && <LinearProgress className={'linearProgress'} color="inherit"/>}
             <Container fixed>
                 <TodoListsList/>
             </Container>
