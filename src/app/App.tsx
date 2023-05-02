@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Container from '@mui/material/Container';
 import {TodoListsList} from "../pages/TodolistsList/TodoListsList";
@@ -14,11 +14,31 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackbar} from "../components/errorSnackBar/ErrorSnackBar";
+import {Login} from "../pages/Login/Login";
+import {Navigate, Route, Routes} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "./castomDispatch/castomUseAppDispatch";
+import {initializeAppTC, logoutTC} from "../pages/Login/authReducer";
+import {CircularProgress} from "@mui/material";
 
 function App() {
-
+    const dispatch = useAppDispatch()
     const status = useSelector<AppRootStateType,RequestStatusType>((state)=> state.appReducer.status)
+    const isLoggedIn = useAppSelector<boolean>(state => state.authReducer.isLoggedIn)
+    const isInitialized = useAppSelector<boolean>(state => state.authReducer.isInitialized)
+    useEffect(()=>{
+        dispatch(initializeAppTC())
+    },[])
 
+    const onClickBtnLogout = () => {
+        dispatch(logoutTC())
+    }
+
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
     return (
         <div>
             <ErrorSnackbar/>
@@ -37,14 +57,23 @@ function App() {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             News
                         </Typography>
-                        <Button color="inherit">Login</Button>
+                        {isLoggedIn ? <Button color="inherit" href={'/'} onClick={onClickBtnLogout} >Logout</Button>
+                                    : <Button color="inherit" href={'/login'} >Login</Button>
+                        }
                     </Toolbar>
                 </AppBar>
             </Box>
             {status === 'loading' && <LinearProgress className={'linearProgress'} color="inherit"/>}
             <Container fixed>
-                <TodoListsList/>
+                <Routes>
+                    <Route path={'/'} element={<TodoListsList/>}/>
+                    <Route path={'/login'} element={ <Login/>}/>
+
+                    <Route path={'/404'} element={<div style={{textAlign: 'center'}}>404 not found</div>}/>
+                    <Route path={'*'} element={<Navigate to={'/404'}/>}/>
+                </Routes>
             </Container>
+            
         </div>
 
     );
