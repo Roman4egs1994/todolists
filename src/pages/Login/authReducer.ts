@@ -44,7 +44,7 @@ export const loginTC = (data: LoginParamsType) => {
                 }
             })
             .catch((err) => {
-                handleServerAppThenError(dispatch, err)
+               handleServerAppCatchError(dispatch, err)
             })
     }
 }
