@@ -59,7 +59,7 @@ function App() {
                             News
                         </Typography>
                         {isLoggedIn ? <Button color="inherit" href={'/'} onClick={onClickBtnLogout} >Logout</Button>
-                                    : <Button color="inherit" href={'/login'} >Login</Button>
+                                    : <Button color="inherit" href={'https://roman4egs1994.github.io/todolists/#/login'} >Login</Button>
                         }
                     </Toolbar>
                 </AppBar>
