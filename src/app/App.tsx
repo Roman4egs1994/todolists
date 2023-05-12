@@ -64,7 +64,7 @@ function App() {
                     </Toolbar>
                 </AppBar>
             </Box>
-            {status === 'loading' && <LinearProgress className={'linearProgress'} color="inherit"/>}
+            {status === 'loading' &&   <LinearProgress className={'linearProgress'} color="inherit"/>}
             <Container fixed>
                 <Routes>
                     <Route path={'/'} element={<TodoListsList/>}/>
