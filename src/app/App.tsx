@@ -32,6 +32,8 @@ function App() {
 
     const onClickBtnLogout = () => {
         dispatch(logoutTC())
+
+        return <Navigate to={'/login'}/>
     }
 
     if (!isInitialized) {
@@ -58,8 +60,8 @@ function App() {
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                             News
                         </Typography>
-                        {isLoggedIn ? <a href={'/login'}><Button color="inherit"  onClick={onClickBtnLogout}>Logout</Button></a>
-                                    : <a href={'/login'}><Button color="inherit" >Login</Button></a>
+                        {isLoggedIn ? <Button color="inherit"  onClick={onClickBtnLogout}>Logout</Button>
+                                    : <Button href={'/'} color="inherit">Login</Button>
                         }
                     </Toolbar>
                 </AppBar>
