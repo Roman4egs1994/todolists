@@ -32,7 +32,10 @@ function App() {
 
     const onClickBtnLogout = () => {
         dispatch(logoutTC())
+        return <Navigate to={'/login'}/>
+    }
 
+    const onClickBtnLogin = () => {
         return <Navigate to={'/login'}/>
     }
 
@@ -61,7 +64,7 @@ function App() {
                             News
                         </Typography>
                         {isLoggedIn ? <Button color="inherit"  onClick={onClickBtnLogout}>Logout</Button>
-                                    : <Button href={'/'} color="inherit">Login</Button>
+                                    : <Button onClick={onClickBtnLogin} color="inherit">Login</Button>
                         }
                     </Toolbar>
                 </AppBar>
