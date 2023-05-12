@@ -70,8 +70,8 @@ function App() {
                     <Route path={'https://roman4egs1994.github.io/todolists/#/'} element={<TodoListsList/>}/>
                     <Route path={'https://roman4egs1994.github.io/todolists/#/login'} element={<Login/>}/>
 
-                    <Route path={'/404'} element={<div style={{textAlign: 'center'}}>404 not found</div>}/>
-                    <Route path={'*'} element={<Navigate to={'/404'}/>}/>
+                    <Route path={'https://roman4egs1994.github.io/todolists/#/404'} element={<div style={{textAlign: 'center'}}>404 not found</div>}/>
+                    <Route path={'*'} element={<Navigate to={'https://roman4egs1994.github.io/todolists/#/404'}/>}/>
                 </Routes>
             </Container>
 
