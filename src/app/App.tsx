@@ -22,13 +22,13 @@ import {CircularProgress} from "@mui/material";
 
 function App() {
     const dispatch = useAppDispatch()
-    const status = useSelector<AppRootStateType,RequestStatusType>((state)=> state.appReducer.status)
+    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.appReducer.status)
     const isLoggedIn = useAppSelector<boolean>(state => state.authReducer.isLoggedIn)
     const isInitialized = useAppSelector<boolean>(state => state.authReducer.isInitialized)
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(initializeAppTC())
-    },[])
+    }, [])
 
     const onClickBtnLogout = () => {
         dispatch(logoutTC())
@@ -43,7 +43,7 @@ function App() {
     return (
         <div>
             <ErrorSnackbar/>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box sx={{flexGrow: 1}}>
                 <AppBar position="static">
                     <Toolbar>
                         <IconButton
@@ -51,16 +51,15 @@ function App() {
                             edge="start"
                             color="inherit"
                             aria-label="menu"
-                            sx={{ mr: 2 }}
+                            sx={{mr: 2}}
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                             News
                         </Typography>
-                        {isLoggedIn ? <Button color="inherit" href={'/'} onClick={onClickBtnLogout} >Logout</Button>
-                                    //
-                            : <></>
+                        {isLoggedIn ? <Button color="inherit" href={'https://roman4egs1994.github.io/todolists/#/'} onClick={onClickBtnLogout}>Logout</Button>
+                                    : <Button color="inherit" href={'https://roman4egs1994.github.io/todolists/#/login'}>Login</Button>
                         }
                     </Toolbar>
                 </AppBar>
@@ -68,16 +67,17 @@ function App() {
             {status === 'loading' && <LinearProgress className={'linearProgress'} color="inherit"/>}
             <Container fixed>
                 <Routes>
-                    <Route path={'/'} element={<TodoListsList/>}/>
-                    <Route path={'/login'} element={ <Login/>}/>
+                    <Route path={'https://roman4egs1994.github.io/todolists/#/'} element={<TodoListsList/>}/>
+                    <Route path={'https://roman4egs1994.github.io/todolists/#/login'} element={<Login/>}/>
 
                     <Route path={'/404'} element={<div style={{textAlign: 'center'}}>404 not found</div>}/>
                     <Route path={'*'} element={<Navigate to={'/404'}/>}/>
                 </Routes>
             </Container>
-            
+
         </div>
 
     );
 }
+
 export default App;
