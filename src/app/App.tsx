@@ -71,8 +71,8 @@ function App() {
                     <Route path={'/'} element={<TodoListsList/>}/>
                     <Route path={'/login'} element={ <Login/>}/>
 
-                    {/*<Route path={'https://roman4egs1994.github.io/todolists/404'} element={<div style={{textAlign: 'center'}}>404 not found</div>}/>*/}
-                    {/*<Route path={'*'} element={<Navigate to={'/404'}/>}/>*/}
+                    <Route path={'/404'} element={<div style={{textAlign: 'center'}}>404 not found</div>}/>
+                    <Route path={'*'} element={<Navigate to={'/404'}/>}/>
                 </Routes>
             </Container>
             
