@@ -67,7 +67,7 @@ export const TodoListsList = () => {
     },[dispatch])
 
     if(!isLoggedIn) {
-        return <Navigate to={'https://roman4egs1994.github.io/todolists/login'}/>
+        return <Navigate to={'/login'}/>
     }
 
     return (

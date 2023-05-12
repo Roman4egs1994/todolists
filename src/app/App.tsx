@@ -58,8 +58,8 @@ function App() {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             News
                         </Typography>
-                        {isLoggedIn ? <Button color="inherit" href={'https://roman4egs1994.github.io/todolists/'} onClick={onClickBtnLogout} >Logout</Button>
-                                    : <Button color="inherit" href={'https://roman4egs1994.github.io/todolists/login'} >Login</Button>
+                        {isLoggedIn ? <Button color="inherit" href={'/'} onClick={onClickBtnLogout} >Logout</Button>
+                                    : <Button color="inherit" href={'/login'} >Login</Button>
                         }
                     </Toolbar>
                 </AppBar>
@@ -67,8 +67,8 @@ function App() {
             {status === 'loading' && <LinearProgress className={'linearProgress'} color="inherit"/>}
             <Container fixed>
                 <Routes>
-                    <Route path={'https://roman4egs1994.github.io/todolists/'} element={<TodoListsList/>}/>
-                    <Route path={'https://roman4egs1994.github.io/todolists/login'} element={ <Login/>}/>
+                    <Route path={'/'} element={<TodoListsList/>}/>
+                    <Route path={'/login'} element={ <Login/>}/>
 
                     {/*<Route path={'https://roman4egs1994.github.io/todolists/404'} element={<div style={{textAlign: 'center'}}>404 not found</div>}/>*/}
                     {/*<Route path={'*'} element={<Navigate to={'/404'}/>}/>*/}
