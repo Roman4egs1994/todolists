@@ -58,8 +58,8 @@ function App() {
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                             News
                         </Typography>
-                        {isLoggedIn ? <Button color="inherit" href={'https://roman4egs1994.github.io/todolists/#/'} onClick={onClickBtnLogout}>Logout</Button>
-                                    : <Button color="inherit" href={'https://roman4egs1994.github.io/todolists/#/login'}>Login</Button>
+                        {isLoggedIn ? <a href={'https://roman4egs1994.github.io/todolists/#/login'}><Button color="inherit"  onClick={onClickBtnLogout}>Logout</Button></a>
+                                    : <a href={'https://roman4egs1994.github.io/todolists/#/login'}><Button color="inherit" >Login</Button></a>
                         }
                     </Toolbar>
                 </AppBar>
